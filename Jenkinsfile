@@ -3,7 +3,7 @@ pipeline {
     
     environment {
         DOCKER_IMAGE = "simple-flask-app:${BUILD_NUMBER}"
-        HOST_PORT = "5002"  // Changed from 5000 to 5002 to avoid conflict
+        HOST_PORT = "5005"  // Changed from 5000 to 5002 to avoid conflict
         CONTAINER_PORT = "5000"
     }
     
@@ -28,9 +28,9 @@ pipeline {
             steps {
                 script {
                     sh '''
-                        docker run -d -p 5003:5000 --name test-container ${DOCKER_IMAGE}
+                        docker run -d -p 5005:5000 --name test-container ${DOCKER_IMAGE}
                         sleep 5
-                        curl http://localhost:5003/health || echo "⚠️ Health check failed but continuing"
+                        curl http://localhost:5005/health || echo "⚠️ Health check failed but continuing"
                         docker stop test-container && docker rm test-container || true
                     '''
                 }
